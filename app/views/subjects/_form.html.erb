@@ -1,0 +1,10 @@
+<%=link_to "back", school_class_subjects_path(current_school_admin)%>
+
+  <div> 
+    <%= f.label :Subjectname %>
+    <%=  f.text_field :subjectname%>
+  </div>
+
+  <div> 
+    <%=  f.submit{@subject.new_record? ? "save" : "update" }%>   
+  </div> 

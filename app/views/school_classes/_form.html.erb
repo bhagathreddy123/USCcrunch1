@@ -1,0 +1,14 @@
+<%=link_to "back",school_classes_path%>
+<div> 
+  <%= f.label :ClassName %>
+  <%=  f.text_field :name%>
+</div>
+
+<div> 
+  <%= f.label :Description %>
+  <%=  f.text_field :description%>
+</div>
+
+<div> 
+  <%=  f.submit{@schoolclass.new_record? ? "save" : "update" }%>   
+</div> 

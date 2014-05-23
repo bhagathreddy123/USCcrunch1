@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin</title>
+    <link rel="shortcut icon" href="/assets/favicon.png" />
+    <%= stylesheet_link_tag "/assets/bootstrap_files/bootstrap","screen","/assets/bootstrap-responsive", "jquery.notifyBar",'base' %>
+    <%= javascript_include_tag "/assets/bootstrap_files/jquery.js", "application","jquery.validate", "jquery.notifyBar","jquery.simplyscroll","jquery.remotipart","bootstrap.min","jquery.iframe-transport","styleswitch" %>
+
+    <% ['notice', 'error', 'warning'].each do |f|%>
+      <% if flash[f.to_sym]%>
+        <script type="text/javascript" >
+          jQuery(function () {
+            jQuery.notifyBar({
+              cls: "<%= f %>",
+              html: "<%=  flash[f.to_sym] %>",
+              delay: 3000,
+              animationSpeed: "normal"
+            });
+          });
+        </script>
+      <%end%>
+    <%end%>
+    <style>
+      body { padding-top: 60px; }
+    </style>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <div class="nav-collapse collapse">
+            <ul class="nav" style="margin: -8px 10px 0 0;">
+              <li class="<%= (params[:controller] == 'admin/dashboards'&& params[:action] == 'index') ? "active" : ""  %>"><%= link_to "Dashboard", admin_dashboards_path, :class => "menubanneritem button" %></li>
+              <li class="<%= (params[:controller] == 'admin/schools'&& params[:action] == 'new' || params[:action] == 'create') ? "active" : ""  %>"><%= link_to "Create School Admin", new_admin_school_path, :class => "menubanneritem button"  %></li>
+            </ul>
+            <ul style="float:right;">
+              <li style="list-style-type:none;">
+                <%= link_to "Sign out", destroy_admin_session_path, :method => 'get' , :class => "menubanneritem button" %>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div style="max-height:545px;">
+      <div class="container">
+        <div class="row-fluid">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    <div id='overlay' style='filter:alpha(opacity=50);'></div>
+    <div align='center' id='popup_box'>
+      <div style='float: right; margin-top: -40px;margin-right:-40px'>
+      </div>
+      <div id='popup_body' style='float:right'></div>
+    </div>
+    <%= render :partial => 'layouts/google_analytics' if Rails.env == 'production' %>
+  </body>
+</html>

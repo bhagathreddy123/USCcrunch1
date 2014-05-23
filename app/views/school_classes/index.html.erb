@@ -1,0 +1,33 @@
+<%= link_to "new",  new_school_class_path %>
+
+
+<div id="Tweet-summary" style="float: left;
+     left: 14px;top: 3px;
+     position: relative;
+     width: 100%;">
+
+
+  <table border="1" width="100%">
+    <tr>
+      <th>Class Name</th>
+      <th>Description</th>
+      <th>Action</th>
+      <th></th>
+    </tr>
+    <% @schoolclass.each do |schoolclass| %>
+      <tr style="text-align: center;">
+        <td><%= schoolclass.name %></td>
+        <td><%= schoolclass.description %></td>
+        <td>
+          <%= link_to 'Show' , school_class_path(schoolclass) %>|
+          <%= link_to 'Edit' ,  edit_school_class_path(schoolclass) %>|
+          <%= link_to "Delete" , school_class_path(schoolclass),:method => :delete, :data => {:confirm =>"are u sure?"} %>
+        </td>
+          <td><%=link_to "addsubject", new_school_class_subject_path(current_school_admin) %></td>
+      </tr>
+    <% end %>
+  </table>
+</div><br />
+
+
+
