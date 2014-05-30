@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140522045132) do
+ActiveRecord::Schema.define(:version => 20140528063930) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -31,6 +31,14 @@ ActiveRecord::Schema.define(:version => 20140522045132) do
 
   add_index "admins", ["email"], :name => "index_admins_on_email", :unique => true
   add_index "admins", ["reset_password_token"], :name => "index_admins_on_reset_password_token", :unique => true
+
+  create_table "attendances", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "school_class_id"
+    t.date     "attendance_day"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "contacts", :force => true do |t|
     t.string   "name"
@@ -143,6 +151,13 @@ ActiveRecord::Schema.define(:version => 20140522045132) do
     t.datetime "updated_at",      :null => false
   end
 
+  create_table "student_classes", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "school_class_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "subjects", :force => true do |t|
     t.integer  "schooladmin_id"
     t.integer  "school_class_id"
@@ -151,6 +166,14 @@ ActiveRecord::Schema.define(:version => 20140522045132) do
     t.integer  "user_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+  end
+
+  create_table "teacher_classes", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "school_class_id"
+    t.integer  "subject_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "tweets", :force => true do |t|
@@ -218,6 +241,8 @@ ActiveRecord::Schema.define(:version => 20140522045132) do
     t.integer  "syllabus_link_file_size"
     t.string   "contact_no"
     t.string   "guardian_no"
+    t.integer  "school_class_id"
+    t.integer  "subject_id"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

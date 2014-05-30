@@ -22,8 +22,16 @@
         <td><%= validation_error(@teacher.errors["contact_no"])%></td>
       </tr>
       
-      
-      
+     
+        
+        <tr>
+        <td valign="top">ClassName :</td>
+        <td><%= select_tag :school_class_id,options_for_select([["select", ""]]+ SchoolClass.all.map{|a| [a.name,a.id]}), :class => 'text required contact number', :id => "inputcontact number" %></td>
+        </tr>
+        <tr>
+          <td valign="top">SubjectName :</td>
+          <td><%= select_tag :subject_id,options_for_select([["select", ""]]+ Subject.all.map{|a| [a.subjectname,a.id]}), :class => 'text required contact number', :id => "inputcontact number" %></td>
+        </tr>
       <tr>
         <td></td>
         <td><%= f.submit "Send Invitation", :class => 'btn'%></td>

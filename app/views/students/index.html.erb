@@ -8,8 +8,8 @@
   <div class = "field" >
     <%=text_field_tag :first_name%>
 </div>
-  <div class="actions"><%= submit_tag "Search"  %></div>
-  <% end %>
+  <div class="actions"><%= submit_tag "Search", :class=>'btn btn-info' %></div>
+  <%  end %>
     
     
   <% if @users.present? %>
@@ -24,9 +24,8 @@
         <th>Role</th>
          <th>Student Contact Number</th>
           <th>Guardian Number</th>
-         
-  
-        <th></th>
+          <th> Class Name </th>
+          <th></th>
       </tr>
       <% for school in @users %>
         <tr style="text-align: center;">
@@ -51,6 +50,10 @@
           <td><%= school.role %></td>
           <td><%= school.contact_no %></td>
           <td> <%=school.guardian_no%> </td>
+         
+    <% st =  StudentClass.find_by_user_id(school.id)%>
+          <td> <%=st ? st.school_class.name : "nil" %> </td>
+          
                   </tr>
       <% end %>
     </table>
@@ -59,4 +62,4 @@
   <% end %>
 </div><br />
 
- <%= link_to "add new student", new_student_path(:school_id => params[:school_id]) %>
+ <%= link_to "add new student", new_student_path(:school_id => params[:school_id]),:class=>'btn btn-info' %>

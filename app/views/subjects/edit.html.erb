@@ -1,4 +1,4 @@
-<%= form_for @subject, :url => school_class_subject_path(current_school_admin), :method => 'PUT' do |f| %>
+<%= form_for @subject, :url => subject_path(@subject), :method => 'PUT' do |f| %>
 
   <% if  @subject.errors.any? %>
     <div id="error_explanation">

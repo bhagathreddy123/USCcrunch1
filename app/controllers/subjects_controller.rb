@@ -14,9 +14,10 @@ layout :get_school_layout
 
   def create
     @subject = Subject.new(params[:subject])
+    @subject.school_class_id = params[:subject][:school_class_id]
     if  @subject.save
       flash[:notice] = "subject has been created successfully"
-      redirect_to  school_class_subjects_path
+      redirect_to  subjects_path
     else
       render :new
     end
@@ -26,7 +27,7 @@ layout :get_school_layout
     @subject = Subject.find(params[:id])
     if @subject.update_attributes(params[:subject])
       flash[:notice] = "subject has been updatedted successfully"
-      redirect_to  school_class_subjects_path
+      redirect_to  subjects_path
     else
       render :edit
     end
@@ -39,7 +40,7 @@ layout :get_school_layout
   def destroy
     @subject = Subject.find(params[:id])
    if  @subject.destroy
-    redirect_to school_class_subjects_path
+    redirect_to subjects_path
    end
   end
 end

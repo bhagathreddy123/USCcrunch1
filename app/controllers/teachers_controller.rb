@@ -1,22 +1,52 @@
 class TeachersController < ApplicationController
   layout :get_school_layout, :except => ['edit', 'update']
 
+  def showattendance
+    @class = SchoolClass.find(params[:school_class_id])
+    @attendances = Attendance.where("school_class_id = #{@class.id}")
+    
+  end
+  
+  def attendence
+    @school = SchoolClass.find(params[:class_id])
+    if params[:attendance]
+      params[:attendance].to_a.each do |att|
+        date = att.split(",")[0].to_date
+        stu = att.split(",")[1].to_i
+        cls = StudentClass.find_by_user_id(stu)
+        attendance = Attendance.new(:attendance_day => date,:user_id => stu,:school_class_id =>params[:class_id])
+        attendance.save
+      end
+    end
+    redirect_to showattendance_school_teachers_path(:school_class_id=>@school)
+  end  
+  
+  def classstudents
+    @school = SchoolClass.find(params[:class_id])
+    @students = StudentClass.where(:school_class_id=>@school.id)
+    for stu in @students
+      puts "FSDSDFGDGDFGDG"
+      puts stu.user_id
+      puts "FFSGGFGFDGDFGFDGFDG"
+    end
+  end
+  
   def search
     @users = User.where("first_name LIKE '#{params[:first_name]}'")
     render :action => 'index'
   end
-      
   
   def index
     @users = User.where("role = 'teacher'")
     # @school = SchoolAdmin.find(params[:school_id])
+    @school = SchoolAdmin.find_by_slug!(params[:school_id])
   end
   
   def new
     @school = SchoolAdmin.find_by_slug!(params[:school_id])
     @teacher = @school.users.new
   end
-
+  
   def create
     @school = SchoolAdmin.find_by_slug!(params[:school_id])
     @teacher = @school.users.new(params[:user])
@@ -25,7 +55,9 @@ class TeachersController < ApplicationController
     @teacher.role = 'teacher'
     @teacher.generate_password_reset_code
     if @teacher.save
-#      @teacher.update_attribute(:confirmation_token,nil)
+      
+      TeacherClass.create(:user_id=>@teacher.id,:school_class_id=>params[:school_class_id],:subject_id=>params[:subject_id])
+      #      @teacher.update_attribute(:confirmation_token,nil)
       puts ">>>>>>>"
       puts @teacher.errors.to_a
       flash[:notice] = "Sccessfully Send invitation to student"
@@ -36,13 +68,6 @@ class TeachersController < ApplicationController
       render :action => 'new'
     end
   end
-
-  
-  
-  
-  
-  
-  
   
   def edit
     @teacher = User.find(params[:id])
@@ -50,7 +75,7 @@ class TeachersController < ApplicationController
       render :text => 'Invalid Token.',:layout => false
     end
   end
-
+  
   def show
     @school = SchoolAdmin.find(params[:school_id])
     @user = User.find(params[:id])
@@ -60,7 +85,7 @@ class TeachersController < ApplicationController
       format.js {render :partial => "show", :layout => false if request.xhr?}
     end
   end
-
+  
   def update
     @teacher = User.find(params[:id])
     if @teacher.update_attributes(params[:user])
@@ -73,7 +98,7 @@ class TeachersController < ApplicationController
       render :action => 'edit'
     end
   end
-
+  
   def destroy
     @teacher = User.find(params[:id])
     if @teacher.destroy

@@ -18,13 +18,20 @@ class StudentsController < ApplicationController
   
   def create
     @school = SchoolAdmin.find_by_slug!(params[:school_id])
-    @student = @school.users.new(params[:user])
+        @student = @school.users.new(params[:user])
     @student.password = 'ashok123'
     @student.password_confirmation = 'ashok123'
     @student.role = 'student'
     @student.generate_password_reset_code
+    
+     #@studentclass = Student_Class.new(params[:student_class_id])
+   
+    
+          
     if @student.save
-    #  @student.update_attribute(:role, 'student')
+      StudentClass.create(:user_id=>@student.id,:school_class_id=>params[:school_class_id])
+     #@student_class.create(user.id ,school_class.id)
+      #  @student.update_attribute(:role, 'student')
      # @student.generate_password_reset_code
       flash[:notice] = "Sccessfully Send invitation to student"
       UserMailer.sent_student_invitation(@school,@student).deliver
@@ -116,3 +123,4 @@ class StudentsController < ApplicationController
     end
   end
 end
+

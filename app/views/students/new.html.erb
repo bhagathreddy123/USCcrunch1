@@ -16,13 +16,18 @@
         <td><%= validation_error(@student.errors["email"])%></td>
       </tr>
       
+     
       <tr>
         <td valign="top">Student Contact Number :</td>
         <td><%= f.text_field :contact_no, :class => 'text required contact number', :id => "inputcontact number" %></td>
         <td><%= validation_error(@student.errors["contact_no"])%></td>
       </tr>
-      
-      
+       
+      <tr>
+        <td valign="top">ClassName :</td>
+        <td><%= select_tag :school_class_id,options_for_select([["select", ""]]+ SchoolClass.all.map{|a| [a.name,a.id]}), :class => 'text required contact number', :id => "inputcontact number" %></td>
+        </tr>
+
        <tr>
         <td valign="top">Guardian Number:</td>
         <td><%= f.text_field :guardian_no, :class => 'text required guardian number', :id => "inputguardian number" %></td>

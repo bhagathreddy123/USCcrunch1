@@ -35,7 +35,7 @@
                 <li class="<%=  params[:controller] == "students" && params[:action] == "new" || params[:action] == 'create' ? "active" : ""%>"><%= link_to "Invite Students", new_school_student_path(current_school_admin), :class => "menubanneritem button" %></li>
                 <li class="<%=  params[:controller] == "teachers" && params[:action] == "new" || params[:action] == 'create' ? "active" : ""%>"><%= link_to "Invite Teachers", new_school_teacher_path((current_school_admin)), :class => "menubanneritem button" %></li>
                     <li class="<%=  params[:controller] == "schoolclasses" && params[:action] == "index" || params[:action] == 'create' ? "active" : ""%>"><%= link_to "class",  school_classes_path(@school), :class => "menubanneritem button" %></li>
-                     <li class="<%#=  params[:controller] == "subjects" && params[:action] == "new" || params[:action] == 'create' ? "active" : ""%>"><%#= link_to "subjects",  subjects_path(@school), :class => "menubanneritem button" %></li>
+                     <li class="<%=  params[:controller] == "subjects" && params[:action] == "new" || params[:action] == 'create' ? "active" : ""%>"><%= link_to "subjects",  subjects_path(@school), :class => "menubanneritem button" %></li>
               </ul>
             <% end %>
             <ul class="nav pull-right">
@@ -66,3 +66,4 @@
     <%= render :partial => 'layouts/google_analytics' if Rails.env == 'production' %>
   </body>
 </html>
+

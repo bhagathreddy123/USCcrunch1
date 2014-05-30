@@ -1,13 +1,14 @@
+
 <div id="Tweet-summary" style="float: left;
      left: 14px;top: 3px;
      position: relative;
      width: 100%;">
   <div id="title">Users</div>
- <%= form_tag search_students_path, :method => "GET" do %>
+  <%= form_tag search_students_path, :method => "GET" do %>
     <div class = "field" >
       <%=text_field_tag :first_name%>
     </div>
-    <div class="actions"><%= submit_tag "Search"  %></div>
+    <div class="actions"><%= submit_tag "Search" , :class=>'btn btn-info' %></div>
   <% end %>
   <% if @users.present? %>
     <table border="1" width="100%">
@@ -15,11 +16,11 @@
         <th>Teacher Id</th>
         <th>TeacherName</th>
         <th>Email</th>
-
         <th>Status</th>
         <th>Role</th>
         <th>Teacher Contact Number</th>
-
+        <th>Teacher Class Name</th>
+        <th>Subject Name</th>
         <th></th>
       </tr>
       <% for school in @users %>
@@ -42,6 +43,16 @@
           </td>
           <td><%= school.role %></td>
           <td><%= school.contact_no %></td>
+          
+          <% tr =  TeacherClass.find_by_user_id(school.id)%>
+          <td> <%= tr ? tr.school_class.name : "nil" %> </td>
+          
+          
+         
+           <% sb =  TeacherClass.find_by_user_id(school.id)%>
+         <td> <%=sb ? sb.subject.subjectname : "nil" %> </td>
+          
+           <td><%=link_to "classstudents", classstudents_school_teacher_path(current_school_admin,school.id,:class_id=>tr.school_class_id ),:class=>'btn btn-info'%></td>
           <td><%#=link_to "Attendence reports", attendence_school_teacher_path(current_school_admin,school.id )%></td>
         </tr>
       <% end %>
@@ -51,4 +62,6 @@
   <% end %>
 </div><br />
 
-<%= link_to "add new teacher", new_teacher_path(:school_id => params[:school_id]) %>
+<%= link_to "add new teacher", new_teacher_path(:school_id => params[:school_id]),:class=>'btn btn-info' %>
+
+

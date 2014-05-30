@@ -1,0 +1,14 @@
+<table border="1" width="100%">
+  <tr>
+    <th>Student Name</th>
+    <td><%=Date.today %></td>
+  </tr>
+  <% @attendances.each do |stu| %>
+    <tr> 
+      
+      <td><%= stu.user.first_name %></td>
+      
+      <td><%= Date.today == stu.attendance_day ? "Present" : "Notpresent" %></td>
+    </tr>
+  <% end %>
+</table>

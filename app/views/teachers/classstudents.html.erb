@@ -1,0 +1,19 @@
+<%= form_tag  attendence_school_teacher_path,  :method => :get do %>
+<%= hidden_field_tag :class_id,@school.id %>
+  <table border="1" width="100%">
+    <tr>
+      <th>Student Name</th>
+      <td><%=Date.today %></td>
+    </tr>
+    <% @students.each do |stu| %>
+      <tr> 
+        <td><%= stu.user.first_name %></td>
+        <td><%= check_box_tag "attendance[]",Date.today.to_s+","+stu.user_id.to_s,false %></td>
+      </tr>
+    <% end %>
+  </table>
+  <%= submit_tag "submit",:class=>'btn btn-default' %>
+<% end %>
+
+
+

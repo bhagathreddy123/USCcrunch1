@@ -1,10 +1,10 @@
-<%=link_to "back", school_class_subjects_path(current_school_admin)%>
+<%=link_to "back", school_classes_path(current_school_admin),:class=>'btn btn-primary' %>
 
-  <div> 
-    <%= f.label :Subjectname %>
-    <%=  f.text_field :subjectname%>
-  </div>
-
-  <div> 
-    <%=  f.submit{@subject.new_record? ? "save" : "update" }%>   
-  </div> 
+<div> 
+  <%= f.label :Subjectname %>
+  <%=  f.text_field :subjectname%>
+</div>
+<%= f.hidden_field :school_class_id, :value => params[:school_class_id] %>
+<div> 
+  <%=  f.submit{@subject.new_record? ? "save" : "update" }  %>   
+</div> 

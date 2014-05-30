@@ -20,14 +20,13 @@ WebApp::Application.routes.draw do
       member do
         get :followers
         get :following
-         get :search
+        get :search
       end
     end
   end
 
-  resources :school_classes do 
-    resources :subjects
-  end
+  resources :school_classes 
+  resources :subjects
   
   
   
@@ -84,7 +83,19 @@ WebApp::Application.routes.draw do
         get :posts
       end
     end
-    resources :teachers
+   resources :teachers  do
+      member do 
+        get :attendence
+        get :classstudents
+      end
+      
+      collection do
+        get :showattendance
+      end
+    end
+
+    
+    
     resources :upload_csvs do
       collection do
         get :search

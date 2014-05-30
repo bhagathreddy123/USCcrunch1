@@ -1,0 +1,14 @@
+
+<table border="1" width="100%">
+  <tr>
+    <th>Student Name</th>
+    <td><%=Date.today %></td>
+  </tr>
+  <% @students.each do |stu| %>
+  
+    <tr> 
+      <td><%= stu.user.first_name %></td>
+      <td><%=check_box_tag "student_dates[]", Date.today.to_s,false %></td>
+    </tr>
+  <% end %>
+</table>
